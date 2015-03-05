@@ -1,2 +1,4 @@
 node_modules/
-js/bundle.js
+src/js/bundle.js
+src/js/bundle.min.js
+dist/
