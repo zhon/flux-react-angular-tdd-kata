@@ -2,29 +2,45 @@
   "name": "flux-react-hogwarts-tdd-kata",
   "version": "0.0.1",
   "description": "",
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d .",
+    "build": "NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "repository": "https://github.com/zhon/",
   "main": "js/app.js",
   "dependencies": {
-    "flux": "^2.0.0",
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
-    "react": "^0.12.0"
+    "react": "^0.12.0",
+    "reflux": "^0.1.13",
+
+    "body-parser": "~1.8.1",
+    "cookie-parser": "~1.3.3",
+    "debug": "~2.0.0",
+    "ejs": "~0.8.5",
+    "express": "~4.9.0",
+    "express-session": "^1.8.2",
+    "morgan": "~1.3.0",
+    "node-jsx": "^0.11.0",
+    "serve-favicon": "~2.1.3"
   },
   "devDependencies": {
     "browserify": "^6.2.0",
     "envify": "^3.0.0",
     "gulp": "~3.8.5",
+    "gulp-clean": "~0.3.1",
     "gulp-concat": "~2.5.2",
+    "gulp-load-plugins": "~0.8.1",
+    "gulp-util": "~3.0.4",
     "jest-cli": "~0.1.17",
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.15",
     "vinyl-source-stream": "~1.0.0",
     "watchify": "^2.1.1"
-  },
-  "scripts": {
-    "start": "watchify -o js/bundle.js -v -d .",
-    "build": "NODE_ENV=production browserify . | uglifyjs -cm > js/bundle.min.js",
-    "test": "jest"
   },
   "author": "Zhon Johansen",
   "browserify": {
@@ -37,3 +53,5 @@
     "rootDir": "./js"
   }
 }
+
+
