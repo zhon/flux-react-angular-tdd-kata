@@ -3,6 +3,7 @@
 var gulp = require('gulp')
 , browserify = require('browserify')
 , concat = require('gulp-concat')
+, del = require('del')
 , reactify = require('reactify')
 , source = require("vinyl-source-stream")
 , watchify   = require('watchify')
@@ -107,9 +108,10 @@ gulp.task('serve', function() {
 
 
 // Clean
-gulp.task('clean', function () {
-  return gulp.src('dist', {read: false})
-    .pipe($.clean());
+gulp.task('clean', function (cb) {
+  del([
+    'dist/**',
+  ], cb);
 });
 
 
