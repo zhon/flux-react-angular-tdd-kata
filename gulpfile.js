@@ -33,11 +33,6 @@ gulp.task('styles', function() {
             errorHandler: onError
         }))
         .pipe($.concat('main.scss'))
-        .pipe($.rubySass({
-            style: 'compressed',
-            precision: 10,
-            loadPath: ['src/bower_components']
-        }))
         .pipe($.autoprefixer('last 3 versions'))
         .pipe(gulp.dest('dist/styles'))
         .pipe($.size());
