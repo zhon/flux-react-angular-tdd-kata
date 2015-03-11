@@ -2,3 +2,4 @@ node_modules/
 src/js/bundle.js
 src/js/bundle.min.js
 dist/
+.DS_STORE

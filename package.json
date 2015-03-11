@@ -13,10 +13,12 @@
   "repository": "https://github.com/zhon/",
   "main": "js/app.js",
   "dependencies": {
+    "bootstrap": "^3.3.2",
     "fastclick": "^1.0.6",
     "keymirror": "~0.1.0",
     "object-assign": "^2.0.0",
     "react": "^0.12.0",
+    "react-bootstrap": "^0.15.1",
     "react-router": "^0.12.4",
     "reflux": "^0.2.6",
 

@@ -10,7 +10,15 @@ var gulp = require('gulp')
 , $          = require('gulp-load-plugins')()
 ;
 
-console.log($);
+var path = {
+  HTML: 'src/index.html',
+  ALL: ['src/js/*.js', 'src/js/**/*.js', 'src/index.html'],
+  JS: ['src/js/*.js', 'src/js/**/*.js'],
+  MINIFIED_OUT: 'build.min.js',
+  DEST_SRC: 'dist/src',
+  DEST_BUILD: 'dist/build',
+  DEST: 'dist'
+};
 
 var prod = $.util.env.prod;
 
@@ -33,11 +41,32 @@ gulp.task('styles', function() {
         .pipe($.plumber({
             errorHandler: onError
         }))
-        .pipe($.concat('main.scss'))
+        .pipe($.concat('main.css'))
         .pipe($.autoprefixer('last 3 versions'))
         .pipe(gulp.dest('dist/styles'))
         .pipe($.size());
 });
+
+// 3rd party libraries
+gulp.task('vendor:font', function() {
+  return gulp.src('node_modules/bootstrap/dist/fonts/**')
+    .pipe(gulp.dest('dist/vendor/fonts'));
+});
+
+gulp.task('vendor:css', function() {
+  return gulp.src([
+    'node_modules/bootstrap/dist/css/*.min.css',
+    'node_modules/bootstrap/dist/css/*.map'
+  ])
+    .pipe(gulp.dest('dist/vendor/css'));
+});
+
+gulp.task('vendor:js', function() {
+  return gulp.src('node_modules/bootstrap/dist/js/bootstrap.min.js')
+    .pipe(gulp.dest('dist/vendor/js'));
+});
+
+gulp.task('vendor', ['vendor:css', 'vendor:js', 'vendor:font']);
 
 // Scripts
 gulp.task('scripts', function() {
@@ -116,13 +145,13 @@ gulp.task('clean', function (cb) {
 
 
 // Default task
-gulp.task('default', ['clean', 'html', 'styles', 'scripts']);
+gulp.task('default', ['clean', 'html', 'styles', 'scripts', 'vendor']);
 
 
 // Watch
-gulp.task('watch', ['html', 'styles', 'scripts', 'serve'], function() {
+gulp.task('watch', ['html', 'styles', 'scripts', 'vendor', 'serve'], function() {
     gulp.watch('src/*.html', ['html']);
-    gulp.watch('src/styles/**/*.scss', ['styles']);
+    gulp.watch('src/styles/**/*.css', ['styles']);
     gulp.watch('src/images/**/*', ['images']);
 });
 

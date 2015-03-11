@@ -12,6 +12,9 @@ var Route         = Router.Route;
 var DefaultRoute  = Router.DefaultRoute;
 var Link          = Router.Link;
 
+
+var Catalog = require('./views/catalog');
+
 //var userStore  = require('./stores/userStore');
 //var actions    = require('./actions/actions');
 //var Posts      = require('./views/posts');
@@ -21,7 +24,7 @@ var Link          = Router.Link;
 //var Login      = require('./components/login');
 //var Register   = require('./components/register');
 
-var ReactNews = React.createClass({
+var App = React.createClass({
 
     mixins: [
         require('react-router').Navigation,
@@ -41,20 +44,24 @@ var ReactNews = React.createClass({
         var userArea;
 
         return (
-<div class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Hogwarts</a>
+<div>
+<header>
+<div className="navbar navbar-inverse">
+    <div className="container">
+        <div className="navbar-header">
+            <a className="navbar-brand" href="#">Hogwarts</a>
         </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
+        <div className="navbar-collapse collapse">
+            <ul className="nav navbar-nav">
                 <li><a ui-sref="sorting">Sorting</a></li>
                 <li><a ui-sref="catalog">Catalog</a></li>
                 <li><a ui-sref="schedule">Schedule</a></li>
             </ul>
         </div>
     </div>
-
+</div>
+</header>
+  <RouteHandler/>
 </div>
         );
     }
@@ -68,14 +75,18 @@ var ReactNews = React.createClass({
         //<Route name="404" path="/404" handler={ UhOh } />
         //<DefaultRoute name="home" handler={ Posts } />
 var routes = (
-    <Route handler={ ReactNews }>
+    <Route name="app" path="/" handler={App}>
+      <DefaultRoute handler={Catalog} />
+      <Route name="catalog" handler={Catalog} />
     </Route>
 );
 
 
-Router.run(routes, function(Handler, state) {
-    React.render(<Handler params={ state.params } />, document.getElementById('app'));
+Router.run(routes, function(Handler) {
+    //React.render(<Handler params={ state.params } />, document.getElementById('app'));
+    React.render(<Handler />, document.body);
 });
 
 // fastclick eliminates 300ms click delay on mobile
 attachFastClick(document.body);
+
