@@ -14,6 +14,7 @@ var Link          = Router.Link;
 
 
 var Catalog = require('./views/catalog');
+var SortingHat = require('./views/sortingHat');
 
 //var userStore  = require('./stores/userStore');
 //var actions    = require('./actions/actions');
@@ -53,9 +54,8 @@ var App = React.createClass({
         </div>
         <div className="navbar-collapse collapse">
             <ul className="nav navbar-nav">
-                <li><a ui-sref="sorting">Sorting</a></li>
-                <li><a ui-sref="catalog">Catalog</a></li>
-                <li><a ui-sref="schedule">Schedule</a></li>
+                <li><Link to="sorting">Sorting</Link></li>
+                <li><Link to="catalog">Catalog</Link></li>
             </ul>
         </div>
     </div>
@@ -78,9 +78,12 @@ var routes = (
     <Route name="app" path="/" handler={App}>
       <DefaultRoute handler={Catalog} />
       <Route name="catalog" handler={Catalog} />
+      <Route name="sorting" handler={SortingHat} />
     </Route>
 );
 
+                //<li><Link to="schedule">Schedule</Link></li>
+      //<Route name="Schedule" handler={Schedule} />
 
 Router.run(routes, function(Handler) {
     //React.render(<Handler params={ state.params } />, document.getElementById('app'));
