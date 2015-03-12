@@ -1,7 +1,27 @@
 'use strict';
 
+var React = require('react');
+
+var WizardStore = require('../stores/wizardStore');
+var HouseStore  = require('../stores/houseStore');
+
 
 var SortingHat = React.createClass({
+
+  getInitialState: function() {
+    this.props.houses = HouseStore.get();
+    return {
+      wizard: WizardStore.get()
+    };
+  },
+
+  componentDidMount: function() {
+    this.unsubscribe = WizardStore.listen(this.onChange);
+  },
+
+  componentWillUnmount: function() {
+    this.unsubscribe();
+  },
 
   _handleClick: function(i) {
     console.log("You clicked on " + i);
@@ -10,7 +30,7 @@ var SortingHat = React.createClass({
   render: function() {
 
     var classValuesForAssignedHouse = "alert alert-success"
-      + (this.props.assignedHouse ? '' : ' hidden');
+      + (this.state.wizard.house ? '' : ' hidden');
 
     return(
 <div>
@@ -23,12 +43,13 @@ var SortingHat = React.createClass({
       <div className={classValuesForAssignedHouse}>You are assigned to {this.props.assignedHouse}!</div>
       <div className="pull-left" style={{paddingLeft: '10'}} >
         <img src="images/sorting-hat.jpg" style={{cursor: "pointer"}} />
-      </div>
-      <div className="well pull-left"  style={{ marginLeft: "50px", padding: "0 100px" }}>
-        <img style={{width:'180px', marginRight:'20px'}} src="images/gryffindor.jpg" alt="Gryffindor"/>
-        <img style={{width:'150px', marginRight:'20px'}} src="images/slytherin.jpg" alt="Slytherin"/>
-        <img style={{width:'170px', marginRight:'20px'}} src="images/ravenclaw.jpg" alt="Ravenclaw"/>
-        <img style={{width:'150px', marginRight:'20px'}} src="images/hufflepuff.jpg" alt="Hufflepuff"/>
+        {
+          this.props.houses.map(function(item) {
+            return (
+              <img src={ "images/" +  item.toLowerCase()  + ".jpg"} alt={item} height="228" key={item}/>
+            )
+          })
+        }
       </div>
     </div>
   </div>
@@ -38,6 +59,10 @@ var SortingHat = React.createClass({
   }
 
 });
+        //<img style={{width:'180px', marginRight:'20px'}} src="images/gryffindor.jpg" alt="Gryffindor"/>
+        //<img style={{width:'150px', marginRight:'20px'}} src="images/slytherin.jpg" alt="Slytherin"/>
+        //<img style={{width:'170px', marginRight:'20px'}} src="images/ravenclaw.jpg" alt="Ravenclaw"/>
+        //<img style={{width:'150px', marginRight:'20px'}} src="images/hufflepuff.jpg" alt="Hufflepuff"/>
 
 
 
