@@ -145,11 +145,11 @@ gulp.task('clean', function (cb) {
 
 
 // Default task
-gulp.task('default', ['clean', 'html', 'styles', 'scripts', 'vendor']);
+gulp.task('default', ['clean', 'html', 'styles', 'scripts', 'vendor', 'images']);
 
 
 // Watch
-gulp.task('watch', ['html', 'styles', 'scripts', 'vendor', 'serve'], function() {
+gulp.task('watch', ['html', 'styles', 'scripts', 'vendor', 'images', 'serve'], function() {
     gulp.watch('src/*.html', ['html']);
     gulp.watch('src/styles/**/*.css', ['styles']);
     gulp.watch('src/images/**/*', ['images']);
