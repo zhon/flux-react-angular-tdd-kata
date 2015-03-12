@@ -76,7 +76,7 @@ var App = React.createClass({
         //<DefaultRoute name="home" handler={ Posts } />
 var routes = (
     <Route name="app" path="/" handler={App}>
-      <DefaultRoute handler={Catalog} />
+      <DefaultRoute handler={SortingHat} />
       <Route name="catalog" handler={Catalog} />
       <Route name="sorting" handler={SortingHat} />
     </Route>
