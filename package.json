@@ -21,6 +21,7 @@
     "react-bootstrap": "^0.15.1",
     "react-router": "^0.12.4",
     "reflux": "^0.2.6",
+    "underscore": "^1.8.2",
 
     "debug": "~2.1.2",
     "node-jsx": "^0.12.4",

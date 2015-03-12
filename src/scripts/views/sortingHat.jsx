@@ -4,6 +4,7 @@ var React = require('react');
 
 var WizardStore = require('../stores/wizardStore');
 var HouseStore  = require('../stores/houseStore');
+var _ = require("underscore");
 
 
 var SortingHat = React.createClass({
@@ -40,7 +41,7 @@ var SortingHat = React.createClass({
   </div>
   <div className="panel">
     <div className="panel-body clearfix">
-      <div className={classValuesForAssignedHouse}>You are assigned to {this.props.assignedHouse}!</div>
+      <div className={classValuesForAssignedHouse}>You are assigned to {this.state.wizard.house || ''}!</div>
       <div className="pull-left" style={{paddingLeft: '10'}} >
         <img src="images/sorting-hat.jpg" style={{cursor: "pointer"}} />
         {
