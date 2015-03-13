@@ -7,15 +7,16 @@ var _wizard = {courses: {}, house: undefined };
 var WizardStore = Reflux.createStore({
 
   init: function() {
-    this.listenTo(WizardActions.sortToHouse, this.onSort);
+    this.listenTo(WizardActions.sortToHouse, 'onChange');
     // Should this be a single course or [ courses ]
     //this.listenTo(WizardActions.editWizard, this.onEdit);
   },
 
   //onUpdateHouse?
-  onSort: function(house) {
+  onChange: function(wizard) {
+    console.log("onChange("+ wizard + ")");
     // house checking?
-    _wizard.house = house;
+    _wizard = wizard;
     this.trigger(_wizard);
   },
 

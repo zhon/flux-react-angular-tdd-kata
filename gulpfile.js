@@ -136,12 +136,31 @@ gulp.task('serve', function() {
         }));
 });
 
+// the config is used for gulp-jest
+var jestConfig = {
+        scriptPreprocessor: "./helpers/preprocessor.js",
+        unmockedModulePathPatterns: [
+            "node_modules/react",
+            "node_modules/reflux"
+        ],
+        //testDirectoryName: "scripts",
+        testPathIgnorePatterns: [
+            "node_modules",
+            "spec/support"
+        ],
+        moduleFileExtensions: [
+            "js",
+            "jsx",
+            "json",
+            "react"
+        ]
+};
+
 // Test
-gulp.task('test', function() {
-  return gulp.src([path.JS, path.TEST], {read: false})
-  .pipe($.shell([
-    'jest'
-  ]));
+gulp.task('test', function () {
+  return gulp.src('src/**/__tests__').pipe($.jest(
+    jestConfig
+  ));
 });
 
 // Clean
@@ -157,7 +176,8 @@ gulp.task('default', ['clean', 'html', 'styles', 'scripts', 'vendor', 'images'])
 
 
 // Watch
-gulp.task('watch', ['html', 'styles', 'scripts', 'vendor', 'images', 'serve'], function() {
+gulp.task('watch', ['html', 'styles', 'scripts', 'test', 'vendor', 'images', 'serve'], function() {
+    gulp.watch('src/**/*.js*', ['test']);
     gulp.watch('src/*.html', ['html']);
     gulp.watch('src/styles/**/*.css', ['styles']);
     gulp.watch('src/images/**/*', ['images']);

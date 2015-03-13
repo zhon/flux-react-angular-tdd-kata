@@ -1,13 +1,17 @@
 'use strict';
 
 var React = require('react');
+var Reflux = require('reflux');
 
-var WizardStore = require('../stores/wizardStore');
-var HouseStore  = require('../stores/houseStore');
+var WizardStore   = require('../stores/wizardStore');
+var HouseStore    = require('../stores/houseStore');
+var WizardActions = require('../actions/wizardActions');
 var _ = require("underscore");
 
 
 var SortingHat = React.createClass({
+
+  mixins: [Reflux.connect(WizardStore, 'wizard')],
 
   getInitialState: function() {
     this.props.houses = HouseStore.get();
@@ -16,16 +20,17 @@ var SortingHat = React.createClass({
     };
   },
 
-  componentDidMount: function() {
-    this.unsubscribe = WizardStore.listen(this.onChange);
-  },
+  onSortToHouse: function(i) {
+    console.log(WizardStore.get());
+    if (this.state.wizard.house) { return; };
+    var newWizard = React.addons.update(this.state, {
+      wizard: {house: {$set: _.last(this.props.houses)}}
+    })
 
-  componentWillUnmount: function() {
-    this.unsubscribe();
-  },
-
-  _handleClick: function(i) {
-    console.log("You clicked on " + i);
+    WizardActions.sortToHouse.preEmit = function() { console.log(arguments); };
+    WizardActions.sortToHouse(newWizard);
+    //WizardActions.sortToHouse(newWizard);
+    //this.setState(newWizard)
   },
 
   render: function() {
@@ -43,7 +48,7 @@ var SortingHat = React.createClass({
     <div className="panel-body clearfix">
       <div className={classValuesForAssignedHouse}>You are assigned to {this.state.wizard.house || ''}!</div>
       <div className="pull-left" style={{paddingLeft: '10'}} >
-        <img src="images/sorting-hat.jpg" style={{cursor: "pointer"}} />
+        <img src="images/sorting-hat.jpg" style={{cursor: "pointer"}} onClick={this.onSortToHouse} />
         {
           this.props.houses.map(function(item) {
             return (
