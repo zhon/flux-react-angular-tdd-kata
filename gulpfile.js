@@ -11,11 +11,12 @@ var gulp = require('gulp')
 ;
 
 var path = {
-  HTML: 'src/index.html',
-  ALL: ['src/js/*.js', 'src/js/**/*.js', 'src/index.html'],
-  JS: ['src/js/*.js', 'src/js/**/*.js'],
+  HTML: 'scripts/index.html',
+  ALL: ['scripts/js/*.js', 'scripts/js/**/*.js', 'scripts/index.html'],
+  JS: ['scripts/js/*.js', 'scripts/js/**/*.js'],
+  TEST: ['scripts/__tests__/**/*.js'],
   MINIFIED_OUT: 'build.min.js',
-  DEST_SRC: 'dist/src',
+  DEST_scripts: 'dist/scripts',
   DEST_BUILD: 'dist/build',
   DEST: 'dist'
 };
@@ -135,6 +136,13 @@ gulp.task('serve', function() {
         }));
 });
 
+// Test
+gulp.task('test', function() {
+  return gulp.src([path.JS, path.TEST], {read: false})
+  .pipe($.shell([
+    'jest'
+  ]));
+});
 
 // Clean
 gulp.task('clean', function (cb) {
