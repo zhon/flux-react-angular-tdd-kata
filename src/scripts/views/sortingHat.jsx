@@ -1,12 +1,13 @@
 'use strict';
 
+var _ = require("underscore");
 var React = require('react');
 var Reflux = require('reflux');
 
 var WizardStore   = require('../stores/wizardStore');
 var HouseStore    = require('../stores/houseStore');
 var WizardActions = require('../actions/wizardActions');
-var _ = require("underscore");
+var HouseImages   = require('../views/houseImages.jsx');
 
 
 var SortingHat = React.createClass({
@@ -29,8 +30,7 @@ var SortingHat = React.createClass({
 
     WizardActions.sortToHouse.preEmit = function() { console.log(arguments); };
     WizardActions.sortToHouse(newWizard);
-    //WizardActions.sortToHouse(newWizard);
-    //this.setState(newWizard)
+    this.setState(newWizard)
   },
 
   render: function() {
@@ -49,13 +49,7 @@ var SortingHat = React.createClass({
       <div className={classValuesForAssignedHouse}>You are assigned to {this.state.wizard.house || ''}!</div>
       <div className="pull-left" style={{paddingLeft: '10'}} >
         <img src="images/sorting-hat.jpg" style={{cursor: "pointer"}} onClick={this.onSortToHouse} />
-        {
-          this.props.houses.map(function(item) {
-            return (
-              <img src={ "images/" +  item.toLowerCase()  + ".jpg"} alt={item} height="228" key={item}/>
-            )
-          })
-        }
+        <HouseImages houses={this.props.houses} wizard={this.state.wizard} />
       </div>
     </div>
   </div>
@@ -72,11 +66,5 @@ var SortingHat = React.createClass({
 
 
 
-
-  //<style>
-  //.selectedHouse{
-    //border: 4px solid brown;
-  //}
-  //</style>
 
 module.exports = SortingHat;
